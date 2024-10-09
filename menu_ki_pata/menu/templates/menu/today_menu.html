@@ -1,13 +1,23 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h2>{{ meal_type|title }} Menu for Today</h2>
-    <ul>
-        {% for meal in meals %}
-            <li>
-                <a href="{% url 'meal_detail' meal.id %}">{{ meal.name }}</a>
-            </li>
-        {% empty %}
-            <li>No meals available for {{ meal_type }}</li>
-        {% endfor %}
-    </ul>
+<h1>Menu for the Week</h1>
+
+<h2>{{ meal_type|title }} Menu for {{ current_date }}</h2>
+<ul>
+    {% for meal in meals %}
+        <li>
+            <a href="{% url 'meal_detail' meal.id %}">{{ meal.name }}</a>
+        </li>
+    {% empty %}
+        <li>No meals available for {{ meal_type }}</li>
+    {% endfor %}
+</ul>
+
+<!-- Navigation Buttons -->
+<div>
+    <form action="{% url 'next_day_menu' %}" method="get">
+        <input type="hidden" name="date" value="{{ current_date }}">
+        <button type="submit">Next Day</button>
+    </form>
+</div>
 {% endblock %}

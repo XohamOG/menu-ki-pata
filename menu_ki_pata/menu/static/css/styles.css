@@ -1,20 +1,31 @@
 body {
+  background: url("/static/images/food-pattern-minimalist-background-illustration-vector.jpg") no-repeat center center fixed;
+  background-size: cover; /* Make the background image cover the entire viewport */
   font-family: Arial, sans-serif;
   text-align: center;
+  margin: 0; /* Remove default margin */
+  height: 100vh; /* Set height to 100% of the viewport height */
 }
 
 header {
-  background-color: #f8f9fa;
+  background-color: rgba(88, 0, 146, 0.8); /* Semi-transparent background */
   padding: 20px;
+  position: relative; /* Ensure it layers correctly */
+  z-index: 1; /* Place above the background */
 }
 
 nav a {
   margin: 10px;
   padding: 10px;
-  background-color: #007bff;
+  background-color: rgba(0, 123, 255, 0.8); /* Semi-transparent background */
   color: white;
   border-radius: 5px;
   text-decoration: none;
+  z-index: 1; /* Place above the background */
+}
+
+nav a:hover {
+  background-color: rgba(0, 86, 179, 0.8); /* Semi-transparent hover */
 }
 
 ul {
@@ -22,7 +33,9 @@ ul {
 }
 
 footer {
-  background-color: #343a40;
+  background-color: rgba(52, 58, 64, 0.8); /* Semi-transparent background */
   color: white;
   padding: 10px;
+  position: relative; /* Ensure it layers correctly */
+  z-index: 1; /* Place above the background */
 }

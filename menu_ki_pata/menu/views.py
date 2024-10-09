@@ -2,12 +2,42 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Meal, Feedback
 from .forms import FeedbackForm
 from datetime import date
+from django.utils import timezone
+from datetime import timedelta
 
 # Show today's menu with filtering by meal type
+# views.py
+from django.shortcuts import render, redirect
+from .models import Meal
+from datetime import timedelta, datetime
+
 def today_menu(request):
-    meal_type = request.GET.get('meal', 'breakfast')  # Default to breakfast
-    meals = Meal.objects.filter(meal_type=meal_type, date=date.today())
-    return render(request, 'menu/today_menu.html', {'meals': meals, 'meal_type': meal_type})
+    # Get the current date or the date from the query parameters
+    current_date = request.GET.get('date', datetime.now().date())
+    current_date = datetime.strptime(current_date, '%Y-%m-%d').date()
+    
+    # Get meals for today
+    meals = Meal.objects.filter(date=current_date)
+    meal_type = 'lunch'  # Or dynamically determine based on the current time
+    
+    # Prepare the context
+    context = {
+        'meals': meals,
+        'meal_type': meal_type,
+        'current_date': current_date,
+    }
+    
+    return render(request, 'menu/today_menu.html', context)
+
+def next_day_menu(request):
+    # Navigate to the next day
+    current_date = request.GET.get('date', datetime.now().date())
+    current_date = datetime.strptime(current_date, '%Y-%m-%d').date()
+    next_date = current_date + timedelta(days=1)
+    
+    return redirect('today_menu', date=next_date)
+
+
 
 # View for a single meal, showing details and feedback
 def meal_detail(request, meal_id):
